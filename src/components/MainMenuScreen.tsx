@@ -1,6 +1,14 @@
+import { useState } from "react";
 import { PLAYER, MODES, BRAWLERS } from "@/data/gameData";
+import MatchmakingScreen from "@/components/MatchmakingScreen";
 
 export default function MainMenuScreen() {
+  const [matchmaking, setMatchmaking] = useState(false);
+
+  if (matchmaking) {
+    return <MatchmakingScreen onCancel={() => setMatchmaking(false)} />;
+  }
+
   return (
     <div className="space-y-4">
       {/* Season Pass Banner */}
@@ -30,7 +38,9 @@ export default function MainMenuScreen() {
       </div>
 
       {/* Play button */}
-      <button className="w-full rounded-2xl py-4 font-bebas text-2xl tracking-widest relative overflow-hidden transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+      <button
+        onClick={() => setMatchmaking(true)}
+        className="w-full rounded-2xl py-4 font-bebas text-2xl tracking-widest relative overflow-hidden transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
         style={{
           background: "linear-gradient(135deg, #FF6B00, #FFB800)",
           color: "#0A0B14",
