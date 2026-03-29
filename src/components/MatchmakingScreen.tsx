@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MODES, BRAWLERS, PLAYER } from "@/data/gameData";
+import GameCanvas from "@/components/GameCanvas";
 
 interface Props {
   onCancel: () => void;
@@ -8,7 +9,7 @@ interface Props {
 const ENEMY_NAMES = ["DarkWolf99", "CrystalBlade", "NeonStrike", "IronFist", "ShadowX"];
 const ENEMY_TAGS = ["#ABC123", "#XY9K2", "#QW8RT", "#ZZ1PQ", "#MN4LR"];
 
-type Phase = "selecting" | "searching" | "found" | "countdown";
+type Phase = "selecting" | "searching" | "found" | "countdown" | "playing";
 
 export default function MatchmakingScreen({ onCancel }: Props) {
   const [phase, setPhase] = useState<Phase>("selecting");
@@ -55,7 +56,7 @@ export default function MatchmakingScreen({ onCancel }: Props) {
 
   useEffect(() => {
     if (phase !== "countdown") return;
-    if (countdown <= 0) { onCancel(); return; }
+    if (countdown <= 0) { setPhase("playing"); return; }
     const t = setInterval(() => setCountdown(c => c - 1), 1000);
     return () => clearInterval(t);
   }, [phase, countdown]);
@@ -63,6 +64,17 @@ export default function MatchmakingScreen({ onCancel }: Props) {
   const formatTime = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
   const mode = MODES[selectedMode];
   const brawler = BRAWLERS[selectedBrawler];
+
+  // === PLAYING PHASE ===
+  if (phase === "playing") {
+    return (
+      <GameCanvas
+        brawlerIdx={selectedBrawler}
+        mode={selectedMode === 2 ? "gems" : "brawl"}
+        onExit={(victory, score) => onCancel()}
+      />
+    );
+  }
 
   // === SELECTION PHASE ===
   if (phase === "selecting") {
