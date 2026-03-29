@@ -18,7 +18,7 @@ export default function BrawlersScreen() {
         <span className="text-sm opacity-60">{BRAWLERS.length} бойцов</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-3 gap-3">
         {BRAWLERS.map((b, i) => (
           <button
             key={b.id}

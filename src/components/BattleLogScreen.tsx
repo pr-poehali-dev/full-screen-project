@@ -35,7 +35,7 @@ export default function BattleLogScreen() {
       </div>
 
       {/* Battle list */}
-      <div className="space-y-2">
+      <div className="grid grid-cols-2 gap-2">
         {BATTLE_LOG.map((battle, i) => {
           const modeColor = modeColors[battle.mode] || "#FFB800";
           const isWin = battle.result === "победа";

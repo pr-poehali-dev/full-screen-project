@@ -38,7 +38,7 @@ export default function TrophyRoadScreen() {
       </div>
 
       {/* Milestones */}
-      <div className="space-y-3">
+      <div className="grid grid-cols-2 gap-3">
         {TROPHY_ROAD.map((milestone, i) => (
           <div key={i}
             className={`trophy-milestone rounded-xl p-4 flex items-center gap-4 ${milestone.current ? "ring-2 ring-yellow-400" : ""}`}
